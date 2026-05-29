@@ -1,0 +1,6 @@
+apiVersion: v2
+name: file-upload-app
+appVersion: 0.1.0
+type: application
+description: File Upload app
+version: v1 

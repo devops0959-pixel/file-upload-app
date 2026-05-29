@@ -1,0 +1,10 @@
+replicacount: 1
+containers:
+  containerPort: 5000
+  image: file-upload
+  tag: v1
+
+ports:
+  port: 80
+  targetPort: 5000
+  protocol: TCP

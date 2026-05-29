@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-deployment
+  namespace: {{ .Values.namespace }}
+  annotations:
+    checksum/config: 
+    checksum/secret: 
+spec:
+  replicas: {{ .Values.replicacount }}
+  selector:
+    matchLabels: 
+      {{- include "file-upload.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: 
+        {{- include "file-upload.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: file-upload
+        image: {{ .Values.containers.image }}:{{ .Values.containers.tag }}
+        imagePullPolicy: Never
+        ports:
+        -  containerPort: {{ .Values.containers.containerPort }}
+
+        volumeMounts:
+          - name: app-storage
+            mountPath: {{ .Values.persistence.mountPath }}
+      
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: {{ .Chart.Name }}-pvc

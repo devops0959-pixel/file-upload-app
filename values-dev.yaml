@@ -1,0 +1,12 @@
+namespace: dev
+
+service:
+  type: ClusterIP
+
+persistence:
+  enabled: true
+  storageClassName: local-path
+  size: 1Gi
+  mountPath: /app/uploads
+  accessModes: 
+    - ReadWriteOnce
