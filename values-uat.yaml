@@ -1,6 +1,5 @@
-namespace: dev
-hostname: dev.fileupload.local
-
+namespace: uat
+hostname: uat.fileupload.local
 service:
   type: ClusterIP
 

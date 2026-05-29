@@ -1,6 +1,5 @@
-namespace: dev
-hostname: dev.fileupload.local
-
+namespace: prod
+hostname: prod.fileupload.local
 service:
   type: ClusterIP
 

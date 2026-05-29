@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: dev.fileupload.local
+    - host: {{ .Values.hostname }}
       http:
         paths:
           - path: /
