@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: file-upload
+  namespace: argocd
+
+spec:
+  generators:
+  - list:
+      elements:
+      - env: dev
+      - env: uat
+      - env: prod
+
+  template:
+    metadata:
+      name: 'file-upload-{{env}}'
+
+    spec:
+      project: default
+
+      source:
+        repoURL: https://github.com/devops0959-pixel/file-upload-app.git
+        targetRevision: HEAD
+        path: .
+
+        helm:
+          valueFiles:
+            - values-{{env}}.yaml
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{env}}'
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
