@@ -1,0 +1,92 @@
+---
+# Source: file-upload-app/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: 
+  name: file-upload-app-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi
+---
+# Source: file-upload-app/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: file-upload-app-service
+  namespace: dev
+spec:
+  selector:
+    
+    
+    name: file-upload-app
+    instance: release-name
+    app: frontend
+  type: ClusterIP
+  #clusterIP: enabled
+  ports:
+  -  protocol: TCP
+     targetPort: 5000
+     port: 80
+---
+# Source: file-upload-app/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-upload-app-deployment
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      
+      name: file-upload-app
+      instance: release-name
+      app: frontend
+  template:
+    metadata:
+      labels:
+        
+        name: file-upload-app
+        instance: release-name
+        app: frontend
+    spec:
+      containers:
+      - name: file-upload
+        image: file-upload:v1
+        imagePullPolicy: Never
+        ports:
+        -  containerPort: 5000
+
+        volumeMounts:
+          - name: app-storage
+            mountPath: /app/uploads
+      
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: file-upload-app-pvc
+---
+# Source: file-upload-app/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: file-upload-app-ingress
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: dev.fileupload.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            
+            backend:
+              service: 
+                name: file-upload-app-service
+                port:
+                  number: 80
