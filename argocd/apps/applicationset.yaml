@@ -9,8 +9,8 @@ spec:
   - list:
       elements:
       - env: dev
-      - env: uat
-      - env: prod
+        #     - env: uat
+        #     - env: prod
 
   template:
     metadata:
