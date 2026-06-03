@@ -19,6 +19,12 @@ spec:
     spec:
       project: default
 
+      ignoreDifferences:
+      - group: apps
+        kind: Deployment
+        jsonPointers:
+        - /spec/replicas
+
       source:
         repoURL: https://github.com/devops0959-pixel/file-upload-app.git
         targetRevision: HEAD
