@@ -1,7 +1,7 @@
 replicacount: 1
 containers:
   containerPort: 5000
-  image: file-upload
+  image: ghcr.io/devops0959-pixel/file-upload-app
   tag: v1
 
 ports:
