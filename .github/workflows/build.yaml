@@ -23,7 +23,7 @@ jobs:
     #BUILD IMAGE
       - name: Build Image
         run: |
-          docker build -t ghcr.io/devops0959-pixel/file-upload-app:test
+          docker build -t ghcr.io/devops0959-pixel/file-upload-app:test .
 
     #PUSH IMAGE
       - name: Push Image
