@@ -16,7 +16,7 @@ spec:
       containers:
       - name: file-upload
         image: {{ .Values.containers.image }}:{{ .Values.containers.tag }}
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         ports:
         -  containerPort: {{ .Values.containers.containerPort }}
         resources:
