@@ -13,6 +13,8 @@ spec:
       labels: 
         {{- include "file-upload.labels" . | nindent 8 }}
     spec:
+      imagePullSecrets:
+      - name: ghcr-secret
       containers:
       - name: file-upload
         image: {{ .Values.containers.image }}:{{ .Values.containers.tag }}
