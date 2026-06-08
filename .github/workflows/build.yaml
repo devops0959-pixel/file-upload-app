@@ -10,17 +10,22 @@ jobs:
       contents: read
       packages: write
     steps:
+    #CHECKOUT CODE
       - name: Checkout Code
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
+    #GHCR LOGIN
       - name: Login to GHCR 
         uses: docker/login-action@v3
         with:
           registry: ghcr.io 
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+    #BUILD IMAGE
       - name: Build Image
         run: |
           docker build -t ghcr.io/devops0959-pixel/file-upload-app:test
+
+    #PUSH IMAGE
       - name: Push Image
         run: |
           docker push ghcr.io/devops0959-pixel/file-upload-app:test
