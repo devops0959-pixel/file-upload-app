@@ -2,19 +2,15 @@ replicacount: 1
 containers:
   containerPort: 5000
   image: ghcr.io/devops0959-pixel/file-upload-app
-  tag: v1
-
+  tag: 3986e749fcbc3e0d01ea96a7470d1202f30780be
 ports:
   port: 80
   targetPort: 5000
   protocol: TCP
-
 resources:
   requests:
     cpu: 100m
     memory: 128Mi
-
   limits:
     cpu: 500m
     memory: 256Mi
-
