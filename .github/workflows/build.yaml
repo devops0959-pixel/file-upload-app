@@ -5,9 +5,10 @@ on:
       - main
 jobs:
   build:
+    if: github.actor != 'github-action[bot]'
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     steps:
     #CHECKOUT CODE
@@ -29,3 +30,21 @@ jobs:
       - name: Push Image
         run: |
           docker push ghcr.io/devops0959-pixel/file-upload-app:${{ github.sha }}
+
+    #UPDATE IMAGE TAG
+      - name: Update values.yaml
+        run: | 
+          sed -i "s/^ tag:.*/ tag: ${{ github.sha }}/" values.yaml
+
+    #CONFIGURE  GIT
+      - name: Configure GIT
+        run: | 
+          git config --global-user.name "github-actions[bot]"
+          git config --global-user.email "github-actions[bot]@users.noreply.github.com"
+
+    #COMMIT AND PUSH
+      - name: Commit and Push 
+        run: |
+          git add values.yaml
+          git commit -m "Update image tag to ${{ github.sha }} [skip ci]" || echo "No changes to commit"
+          git push 
