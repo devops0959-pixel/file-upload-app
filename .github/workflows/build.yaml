@@ -34,7 +34,7 @@ jobs:
     #UPDATE IMAGE TAG
       - name: Update values.yaml
         run: | 
-          sed -i "s/^ tag:.*/ tag: ${{ github.sha }}/" values.yaml
+          yq -i '.containers.tag = env(GITHUB_SHA)' values.yaml
 
     #CONFIGURE  GIT
       - name: Configure GIT
