@@ -5,6 +5,7 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicacount }}
+  revisionHistoryLimit: 2
   selector:
     matchLabels: 
       {{- include "file-upload.labels" . | nindent 6 }}
